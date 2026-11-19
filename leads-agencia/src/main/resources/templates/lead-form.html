@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Lead')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: topo}"></header>
+<div class="panel">
+  <h2 th:text="${form.id == null} ? 'Novo lead' : 'Editar lead'">Lead</h2>
+  <form class="grid" th:action="@{/leads}" th:object="${form}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <label>Nome<input th:field="*{nome}" required>
+      <span class="err" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span></label>
+    <label>Empresa<input th:field="*{empresa}"></label>
+    <label>E-mail<input type="email" th:field="*{email}"></label>
+    <label>WhatsApp<input th:field="*{telefone}" placeholder="(34) 99999-9999"></label>
+    <label>Origem<select th:field="*{origem}"><option th:each="o : ${origens}" th:value="${o}" th:text="${o.label}"></option></select></label>
+    <label>Tipo de projeto<select th:field="*{tipo}"><option th:each="t : ${tipos}" th:value="${t}" th:text="${t.label}"></option></select></label>
+    <label>Orçamento estimado (R$)<input type="number" min="0" step="100" th:field="*{orcamento}"></label>
+    <label>Prazo para começar<select th:field="*{prazo}"><option th:each="p : ${prazos}" th:value="${p}" th:text="${p.label}"></option></select></label>
+    <label>Responsável<select th:field="*{responsavelId}"><option value="">Sem responsável</option><option th:each="u : ${usuarios}" th:value="${u.id}" th:text="${u.nome}"></option></select></label>
+    <label>Etapa<select th:field="*{etapa}"><option th:each="e : ${etapas}" th:value="${e}" th:text="${e.label}"></option></select></label>
+    <label>Prioridade<select th:field="*{prioridadeManual}"><option value="">Automática</option><option th:each="p : ${prioridades}" th:value="${p}" th:text="${p.label}"></option></select></label>
+    <label>Último contato<input type="date" th:field="*{ultimoContato}"></label>
+    <label class="chk"><input type="checkbox" th:field="*{decisor}"> É o decisor</label>
+    <label class="chk"><input type="checkbox" th:field="*{respondeu}"> Já respondeu</label>
+    <label class="w">Motivo da perda (se o lead foi perdido)<input th:field="*{motivoPerda}" placeholder="Preço, prazo, sumiu…"></label>
+    <label class="w">Anotações<textarea rows="4" th:field="*{notas}"></textarea></label>
+    <div class="actions w">
+      <a class="btn sec" th:href="@{/}">Cancelar</a>
+      <button class="btn" type="submit">Salvar lead</button>
+    </div>
+  </form>
+  <form th:if="${form.id != null}" th:action="@{/leads/{id}/excluir(id=${form.id})}" method="post"
+        onsubmit="return confirm('Excluir este lead? Essa ação não pode ser desfeita.')" style="margin-top:12px">
+    <button class="btn del" type="submit">Excluir lead</button>
+  </form>
+</div>
+</body>
+</html>

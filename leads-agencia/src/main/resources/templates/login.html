@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Entrar · DevWeb Leads</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap">
+  <link rel="icon" type="image/png" th:href="@{/img/favicon.png}">
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body class="login-page">
+<img class="login-logo" th:src="@{/img/logo.png}" alt="DevWeb">
+<form class="login" th:action="@{/login}" method="post">
+  <div>
+    <h1>Entrar</h1>
+    <p>Painel de leads da equipe.</p>
+  </div>
+  <div class="err" th:if="${param.error}">E-mail ou senha incorretos.</div>
+  <div class="msg ok" th:if="${param.logout}">Você saiu do sistema.</div>
+  <label>E-mail<input type="email" name="username" required autofocus autocomplete="username"></label>
+  <label>Senha<input type="password" name="password" required autocomplete="current-password"></label>
+  <button class="btn" type="submit">Entrar</button>
+</form>
+</body>
+</html>
